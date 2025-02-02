@@ -7,7 +7,7 @@
       light-style
       appindicator
       launch-new-instance
-      rounded-window-corners
+      rounded-window-corners-reborn
       ;
   };
 in {
@@ -18,10 +18,8 @@ in {
       inherit
         (pkgs)
         # utils
-        
         pinentry-gnome3
         # apps
-        
         signal-desktop
         telegram-desktop
         google-chrome
@@ -33,7 +31,6 @@ in {
         nsxiv
         mpv
         # fonts
-        
         meslo-lgs-nf
         ;
 
@@ -115,7 +112,7 @@ in {
         name = "Launch terminal";
       };
 
-      # TODO: Make it a proper script/plugin whatever
+      # TODO: Remove [momentarily, still needed]
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
         binding = "<Super>j";
         command = "/home/akemi/dot/sketchpad/notes.sh";

@@ -10,7 +10,6 @@ _: {
         "man"
       ];
 
-      # TODO: Make own theme
       options.theme = {
         normal = {
           a = {

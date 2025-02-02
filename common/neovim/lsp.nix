@@ -7,14 +7,13 @@ _: {
 
       servers = {
         cmake.enable = true;
-        ts-ls.enable = true;
+        ts_ls.enable = true;
         svelte.enable = true;
-        nil-ls.enable = true;
+        nil_ls.enable = true;
         clangd.enable = true;
         pyright.enable = true;
-        ocamllsp.enable = true;
 
-        rust-analyzer = {
+        rust_analyzer = {
           enable = true;
 
           installRustc = false;
@@ -41,7 +40,6 @@ _: {
         formatting = {
           just.enable = true;
           alejandra.enable = true;
-          ocamlformat.enable = true;
           clang_format.enable = true;
 
           black = {
@@ -94,11 +92,11 @@ _: {
             just = ["just"];
           }
           // builtins.listToAttrs (map (ft: {
-              # TODO: Move to Biome.
               name = ft;
               value = {
-                __unkeyed-1 = "prettierd";
-                __unkeyed-2 = "prettier";
+                __unkeyed-1 = "biome";
+                __unkeyed-2 = "prettierd";
+                __unkeyed-3 = "prettier";
 
                 stop_after_first = true;
               };

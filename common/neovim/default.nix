@@ -169,9 +169,9 @@
       web-devicons.enable = false;
 
       nvim-autopairs.enable = true;
-      nvim-colorizer = {
+      colorizer = {
         enable = true;
-        fileTypes = ["*"];
+        settings.fileTypes = ["*"];
       };
 
       neocord = {

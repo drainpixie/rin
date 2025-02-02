@@ -1,8 +1,10 @@
-## ❄️ nixos-config
+# ❄️ rin 凛
 
 nixos flake + home-manager for my systems
 
 ## 🌐 hosts
+
+names follow Puella Magi Madoka Magica
 
 - **akemi@timeline**
 
@@ -10,7 +12,8 @@ nixos flake + home-manager for my systems
   - personal laptop
   - nixos
 
-- **kyubey@incubator**
+- **kyubey@incubator** (dead)
+
   - asus p8p67-m
   - homeserver
   - nixos

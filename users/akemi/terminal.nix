@@ -108,7 +108,8 @@
     inherit
       (pkgs.faye)
       gign
-      kc
+      # kc
+      
       ;
   };
 }

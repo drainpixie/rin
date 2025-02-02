@@ -29,6 +29,8 @@ in {
     };
   };
 
+  services.arrpc.enable = true;
+
   xdg = {
     enable = true;
 

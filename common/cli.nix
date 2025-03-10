@@ -50,6 +50,7 @@ _: {
         "ignorespace"
         "erasedups"
       ];
+
       shellOptions = [
         "histappend"
         "cmdhist"

@@ -1,17 +1,26 @@
 {pkgs, ...}: {
   imports = [
+    ./steam.nix
     ./audio.nix
     ./xserver.nix
     ./hardware.nix
-    ./temp.nix
 
     ../../common/system.nix
   ];
 
-  environment.systemPackages = [pkgs.docker-compose];
-  virtualisation.docker = {
-    enable = true;
-    autoPrune.enable = true;
+  environment.systemPackages = builtins.attrValues {
+    inherit
+      (pkgs)
+      ntfs3g
+      docker-compose
+      ;
+  };
+
+  virtualisation = {
+    docker = {
+      enable = true;
+      autoPrune.enable = true;
+    };
   };
 
   networking.hostName = "timeline";
@@ -41,7 +50,6 @@
     uid = 1000;
     home = "/home/akemi";
 
-    # TODO: Zsh
     shell = pkgs.bash;
     isNormalUser = true;
     initialPassword = "changeme";

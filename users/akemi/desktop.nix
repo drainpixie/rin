@@ -112,13 +112,6 @@ in {
         name = "Launch terminal";
       };
 
-      # TODO: Remove [momentarily, still needed]
-      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-        binding = "<Super>j";
-        command = "/home/akemi/dot/sketchpad/notes.sh";
-        name = "Launch notes sketchpad";
-      };
-
       # UI
       "org/gnome/desktop/interface" = {
         font-name = "Drafting Mono ExtraLight 10";

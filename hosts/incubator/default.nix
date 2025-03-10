@@ -1,8 +1,6 @@
 {pkgs, ...}: {
   imports = [
     ./hardware.nix
-    ./ssh.nix
-
     ../../common/system.nix
   ];
 
@@ -35,6 +33,16 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGjrd3Drz463j6IpRJzPIm+KczyhYE7upw7rjlGTlMnJ drainpixie"
     ];
+  };
+
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+
+      PermitRootLogin = "prohibit-password";
+    };
   };
 
   system.stateVersion = "23.11";

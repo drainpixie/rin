@@ -23,7 +23,5 @@
         man-pages-posix
         ;
     };
-
-    file.".hushlogin".text = "";
   };
 }

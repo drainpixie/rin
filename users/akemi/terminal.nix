@@ -12,27 +12,6 @@
       delta.enable = true;
     };
 
-    urxvt = {
-      enable = true;
-      iso14755 = false;
-
-      fonts = [
-        "Drafting Mono"
-      ];
-
-      keybindings = {
-        "Shift-Control-C" = "eval:selection_to_clipboard";
-        "Shift-Control-V" = "eval:paste_clipboard";
-      };
-
-      extraConfig = {
-        internalBorder = 16;
-        iso14755_52 = false;
-      };
-
-      scroll.bar.enable = false;
-    };
-
     alacritty = {
       enable = true;
       settings = {
@@ -67,6 +46,7 @@
             background = "0xf7f7f7";
             foreground = "0x000000";
           };
+
           normal = {
             black = "0x282a2e";
             red = "0xaa3731";
@@ -77,6 +57,7 @@
             cyan = "0x0083b2";
             white = "0x707880";
           };
+
           bright = {
             black = "0x373b41";
             red = "0xf05050";

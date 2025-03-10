@@ -38,33 +38,14 @@ _: {
         };
 
         formatting = {
+          black.enable = true;
           just.enable = true;
           alejandra.enable = true;
           clang_format.enable = true;
 
-          black = {
-            enable = true;
-
-            settings = {
-              withArgs = ''
-                {
-                	extra_args = { "--fast" },
-                }
-              '';
-            };
-          };
-
           prettier = {
             enable = true;
             disableTsServerFormatter = true;
-
-            settings = {
-              withArgs = ''
-                {
-                	extra_args = { "--single-quote" },
-                }
-              '';
-            };
           };
 
           stylua.enable = true;
@@ -78,7 +59,7 @@ _: {
       settings = {
         format_on_save = {
           lspFallback = true;
-          timeoutMs = 1500;
+          timeoutMs = 2000;
         };
 
         notify_on_error = true;

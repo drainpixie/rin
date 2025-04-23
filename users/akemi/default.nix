@@ -22,6 +22,18 @@
         man-pages-posix
         man-pages
         ;
+
+      inherit
+        (pkgs.dotnetCorePackages.dotnet_8)
+        sdk
+        ;
+    };
+
+    sessionVariables = {
+      DOTNET_ROOT = "${pkgs.dotnetCorePackages.dotnet_8.sdk}/bin";
+      DOTNET_NOLOGO = "1";
+      DOTNET_MULTILEVEL_LOOKUP = "0";
+      DOTNET_CLI_TELEMETRY_OPTOUT = "1";
     };
   };
 

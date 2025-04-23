@@ -71,7 +71,7 @@ _: {
         c = "clear";
         cd = "z";
         mkdir = "mkdir -pv";
-        koji = "koji -e true -a true";
+        koji = "koji --emoji";
 
         # humanise output
         df = "df -h";

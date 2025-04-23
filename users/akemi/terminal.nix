@@ -90,11 +90,6 @@
         curl
         fd
         ;
-
-      inherit
-        (pkgs.faye)
-        gign
-        ;
     }
     ++ [choose];
 }

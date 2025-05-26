@@ -105,6 +105,7 @@
       pre-commit-check = lib.run {
         src = ./.;
         hooks = {
+          convco.enable = true;
           alejandra.enable = true;
           statix = {
             enable = true;

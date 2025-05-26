@@ -18,19 +18,23 @@ in {
       inherit
         (pkgs)
         # utils
+        
         pinentry-gnome3
         # apps
-        signal-desktop
+        
         telegram-desktop
+        signal-desktop
         google-chrome
         pavucontrol
         obsidian
         zathura
         vesktop
         gparted
+        bruno
         nsxiv
         mpv
         # fonts
+        
         meslo-lgs-nf
         ;
 

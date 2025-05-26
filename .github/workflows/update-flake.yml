@@ -1,59 +1,22 @@
-name: Update flake inputs
+name: update-flake-lock
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * 1"
-
-permissions: write-all
+    - cron: "0 0 * * 0"
 
 jobs:
-  update:
+  lockfile:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Install Nix
-        uses: cachix/install-nix-action@v27
+      - name: Install Determinate Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+      - name: Update flake.lock
+        uses: DeterminateSystems/update-flake-lock@main
         with:
-          nix_path: nixpkgs=channel:nixos-unstable
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Configure git
-        env:
-          GITHUB_USER: fembotpixie
-          GITHUB_EMAIL: fembotpixie@users.noreply.github.com
-          GITHUB_TOKEN: ${{ secrets.FEMBOT_TOKEN }}
-        run: |
-          git remote set-url origin "https://${GITHUB_TOKEN}:x-oauth-basic@github.com/${GITHUB_REPOSITORY}.git";
-          git config --local user.email "${GITHUB_EMAIL}";
-          git config --local user.name "${GITHUB_USER}";
-
-      - name: Handle existing PRs
-        env:
-          GITHUB_TOKEN: ${{ secrets.FEMBOT_TOKEN }}
-        run: |
-          existing_prs=$(gh pr list --search "build(flake): 🔒 update inputs in:title" --state open --json number,url --jq '.[].number')
-
-          if [ ! -z "$existing_prs" ]; then
-            for pr in $existing_prs; do
-              gh pr close $pr --comment "*Closing in favor of a new update PR*"
-            done
-          fi
-
-      - name: Switch branch
-        run: |
-          git fetch origin
-          git checkout -B update/flake
-
-      - name: Update flake
-        run: "nix --option commit-lockfile-summary 'chore: update lock' flake update --commit-lock-file"
-
-      - name: Push to repository
-        run: git push -f --set-upstream origin update/flake
-
-      - name: Create pull request
-        env:
-          GITHUB_TOKEN: ${{ secrets.FEMBOT_TOKEN }}
-        run: 'gh pr create -B main -t "build(flake): update inputs" -b "*Automatic action*"'
+          pr-title: "build(flake): update lock"
+          pr-labels: |
+            dependencies
+            automated

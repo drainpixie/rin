@@ -5,6 +5,11 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     hardware.url = "github:NixOS/nixos-hardware";
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,6 +35,7 @@
   outputs = {
     hardware,
     nixpkgs,
+    disko,
     hooks,
     home,
     self,
@@ -66,7 +72,7 @@
               ./modules/config.nix
 
               ./systems/${opts.host}/host.nix
-              ./systems/${opts.host}/hardware.nix
+              ./systems/${opts.host}/part.nix
 
               {
                 nixpkgs.overlays = [
@@ -101,7 +107,10 @@
     # `nixos-rebuild switch --flake .#hostname`
 
     nixosConfigurations.timeline = mkHost {
-      extraModules = [hardware.nixosModules.dell-latitude-5520];
+      extraModules = [
+        hardware.nixosModules.dell-latitude-5520
+        disko.nixosModules.disko
+      ];
 
       opts = {
         editor = "nvim";

@@ -3,7 +3,6 @@
   pkgs,
   ...
 }: {
-  users.users."${opts.user}".shell = pkgs.zsh;
   programs.zsh.enable = true;
 
   time.hardwareClockInLocalTime = true;

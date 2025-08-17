@@ -5,7 +5,10 @@
   modulesPath,
   ...
 }: {
-  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
+  imports = [
+    ./disko.nix
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
 
   boot = {
     initrd = {
@@ -19,37 +22,10 @@
       ];
 
       kernelModules = [];
-
-      luks.devices."encrypted" = {
-        device = "/dev/disk/by-label/ENCRYPTED";
-        preLVM = true;
-      };
     };
 
     kernelModules = ["kvm-intel"];
     extraModulePackages = [];
-  };
-
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-label/NIXROOT";
-      fsType = "ext4";
-    };
-
-    "/boot" = {
-      device = "/dev/disk/by-label/NIXBOOT";
-      fsType = "vfat";
-    };
-
-    "/media/backup" = {
-      device = "/dev/disk/by-label/BACKUP";
-      fsType = "ext4";
-
-      options = [
-        "user"
-        "rw"
-      ];
-    };
   };
 
   swapDevices = [
@@ -62,10 +38,11 @@
   networking.useDHCP = lib.mkDefault true;
   nixpkgs.hostPlatform = opts.architecture;
 
+  environment.etc."rin".source = ../..;
   virtualisation.vmVariant.virtualisation = {
     memorySize = 4 * 1024;
-    cores = 3;
     graphics = true;
+    cores = 3;
   };
 
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

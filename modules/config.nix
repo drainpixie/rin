@@ -1,6 +1,6 @@
 {
   lib,
-  config,
+  opts,
   ...
 }: {
   options = {
@@ -30,7 +30,7 @@
   };
 
   config = {
-    networking.hostName = config.host;
+    networking.hostName = opts.host;
 
     i18n.defaultLocale = "en_US.UTF-8";
     time.timeZone = "Europe/Rome";

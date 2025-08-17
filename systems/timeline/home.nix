@@ -22,7 +22,8 @@ in {
   fonts.fontconfig.enable = true;
   systemd.user.startServices = "sd-switch";
 
-  shell.zsh.enable = true;
+  shell.minimal = false;
+  shell.enable = true;
 
   home = {
     homeDirectory = "/home/${opts.user}";

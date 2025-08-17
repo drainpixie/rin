@@ -3,6 +3,9 @@
   pkgs,
   ...
 }: {
+  users.users."${opts.user}".shell = pkgs.zsh;
+  programs.zsh.enable = true;
+
   time.hardwareClockInLocalTime = true;
   documentation.nixos.enable = false;
   services.upower.enable = true;
@@ -15,7 +18,7 @@
 
   users.users.${opts.user} = {
     uid = 1000;
-    shell = pkgs.bash;
+    shell = pkgs.zsh;
     isNormalUser = true;
     home = "/home/${opts.user}";
     initialPassword = "changeme";

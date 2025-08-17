@@ -1,21 +1,21 @@
 {
   config,
+  opts,
+  pkgs,
   lib,
   ...
 }: {
-  options.shell.zsh = {
-    enable = lib.mkEnableOption "faye's zsh configuration with modern CLI tools";
-    minimal = lib.mkEnableOption "minimal zsh configuration with fewer tools"; # server use
-  };
+  options.shell.minimal = lib.mkEnableOption "faye's minimal zsh configuration, now with fewer tools";
+  options.shell.enable = lib.mkEnableOption "faye's zsh configuration with modern CLI tools";
 
-  config = lib.mkIf config.shell.zsh.enable {
+  config = lib.mkIf config.shell.enable {
     programs = {
       direnv = {
         enable = true;
         enableZshIntegration = true;
       };
 
-      zoxide = lib.mkIf (!config.shell.zsh.minimal) {
+      zoxide = lib.mkIf (!config.shell.minimal) {
         enable = true;
         enableZshIntegration = true;
       };
@@ -44,7 +44,7 @@
         ];
       };
 
-      bat = lib.mkIf (!config.shell.zsh.minimal) {
+      bat = lib.mkIf (!config.shell.minimal) {
         enable = true;
         config = {
           theme = "ansi";
@@ -55,9 +55,9 @@
       zsh = {
         enable = true;
         enableCompletion = true;
-        autosuggestion.enable = !config.shell.zsh.minimal;
-        syntaxHighlighting.enable = !config.shell.zsh.minimal;
-        historySubstringSearch.enable = !config.shell.zsh.minimal;
+        autosuggestion.enable = !config.shell.minimal;
+        syntaxHighlighting.enable = !config.shell.minimal;
+        historySubstringSearch.enable = !config.shell.minimal;
 
         history = {
           extended = true;
@@ -79,7 +79,7 @@
 
         shellAliases = {
           c = "clear";
-          cd = lib.mkIf (!config.shell.zsh.minimal) "z";
+          cd = lib.mkIf (!config.shell.minimal) "z";
           mkdir = "mkdir -pv";
 
           df = "df -h";
@@ -91,7 +91,7 @@
           rm = "rm -i";
           mv = "mv -i";
 
-          cat = lib.mkIf (!config.shell.zsh.minimal) "bat";
+          cat = lib.mkIf (!config.shell.minimal) "bat";
           grep = "rg --color=always --hidden --smart-case";
         };
       };

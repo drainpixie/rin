@@ -10,6 +10,7 @@
   documentation.nixos.enable = false;
   services.upower.enable = true;
   powerManagement.enable = true;
+  services.tlp.enable = true;
 
   hardware.bluetooth = {
     enable = true;

@@ -99,7 +99,6 @@
         };
   in {
     # `nixos-rebuild switch --flake .#hostname`
-    # `home-manager switch --flake .#username@hostname`
 
     nixosConfigurations.timeline = mkHost {
       extraModules = [hardware.nixosModules.dell-latitude-5520];

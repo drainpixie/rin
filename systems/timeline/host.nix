@@ -5,7 +5,10 @@
 }: {
   imports = [
     ../../modules/shell.nix
+    ../../modules/de.nix
   ];
+
+  de.gnome = true;
 
   shell.minimal = false;
   shell.enable = true;

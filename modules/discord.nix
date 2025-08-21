@@ -5,7 +5,7 @@
 }: {
   options.my.discord = lib.mkEnableOption "faye's discord configuration";
 
-  config = lib.mkIf config.my.discord.enable {
+  config = lib.mkIf config.my.discord {
     hm = {
       programs.vesktop = {
         enable = true;

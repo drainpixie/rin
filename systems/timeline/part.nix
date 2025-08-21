@@ -1,6 +1,5 @@
 {
   lib,
-  opts,
   config,
   modulesPath,
   ...
@@ -36,9 +35,8 @@
   ];
 
   networking.useDHCP = lib.mkDefault true;
-  nixpkgs.hostPlatform = opts.architecture;
+  nixpkgs.hostPlatform = config.my.architecture;
 
-  environment.etc."rin".source = ../..;
   virtualisation.vmVariant.virtualisation = {
     memorySize = 4 * 1024;
     graphics = true;

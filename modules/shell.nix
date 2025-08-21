@@ -1,16 +1,15 @@
 {
   config,
   pkgs,
-  opts,
   lib,
   ...
 }: {
-  options.shell.minimal = lib.mkEnableOption "faye's minimal zsh configuration, now with fewer tools";
-  options.shell.enable = lib.mkEnableOption "faye's zsh configuration with modern CLI tools";
+  options.my.shell.minimal = lib.mkEnableOption "faye's minimal zsh configuration, now with fewer tools";
+  options.my.shell.enable = lib.mkEnableOption "faye's zsh configuration with modern CLI tools";
 
-  config = lib.mkIf config.shell.enable {
+  config = lib.mkIf config.my.shell.enable {
     programs.zsh.enable = true;
-    users.users."${opts.user}".shell = pkgs.zsh;
+    users.users."${config.my.user}".shell = pkgs.zsh;
 
     hm = {
       programs = {
@@ -19,7 +18,7 @@
           enableZshIntegration = true;
         };
 
-        zoxide = lib.mkIf (!config.shell.minimal) {
+        zoxide = lib.mkIf (!config.my.shell.minimal) {
           enable = true;
           enableZshIntegration = true;
         };
@@ -48,7 +47,7 @@
           ];
         };
 
-        bat = lib.mkIf (!config.shell.minimal) {
+        bat = lib.mkIf (!config.my.shell.minimal) {
           enable = true;
           config = {
             theme = "ansi";
@@ -59,9 +58,9 @@
         zsh = {
           enable = true;
           enableCompletion = true;
-          autosuggestion.enable = !config.shell.minimal;
-          syntaxHighlighting.enable = !config.shell.minimal;
-          historySubstringSearch.enable = !config.shell.minimal;
+          autosuggestion.enable = !config.my.shell.minimal;
+          syntaxHighlighting.enable = !config.my.shell.minimal;
+          historySubstringSearch.enable = !config.my.shell.minimal;
 
           history = {
             share = true;
@@ -93,7 +92,7 @@
 
           shellAliases = {
             c = "clear";
-            cd = lib.mkIf (!config.shell.minimal) "z";
+            cd = lib.mkIf (!config.my.shell.minimal) "z";
             mkdir = "mkdir -pv";
 
             df = "df -h";
@@ -105,7 +104,7 @@
             rm = "rm -i";
             mv = "mv -i";
 
-            cat = lib.mkIf (!config.shell.minimal) "bat";
+            cat = lib.mkIf (!config.my.shell.minimal) "bat";
             grep = "rg --color=always --hidden --smart-case";
           };
         };

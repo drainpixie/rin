@@ -4,8 +4,6 @@
   lib,
   ...
 }: let
-  opts = config.de;
-
   gnomeExtensions = builtins.attrValues {
     inherit
       (pkgs.gnomeExtensions)
@@ -18,13 +16,78 @@
       ;
   };
 in {
-  # todo: choose font via config.nix + other stuff like extensions we'll see later
+  options.my.layout = lib.mkOption {
+    type = lib.types.str;
+    default = "it";
+    description = "The keyboard layout to use.";
+  };
 
-  options.de.gnome = lib.mkEnableOption "faye's gnome configuration";
-  options.de.berry = lib.mkEnableOption "faye's berry configuration";
+  options.my.de = lib.mkOption {
+    type = lib.types.enum ["gnome" "berry"];
+    default = "gnome";
+    description = "faye's desktop environments";
+  };
 
   config = lib.mkMerge [
-    (lib.mkIf opts.gnome {
+    {
+      services = {
+        xserver = {
+          enable = true;
+          xkb.layout = config.my.layout;
+
+          excludePackages = builtins.attrValues {
+            inherit
+              (pkgs)
+              xterm
+              ;
+          };
+        };
+
+        displayManager.ly.enable = true;
+      };
+    }
+
+    (lib.mkIf (config.my.de == "gnome") {
+      programs.ssh.startAgent = lib.mkForce false;
+
+      services = {
+        desktopManager.gnome.enable = true;
+        gnome.gnome-keyring.enable = true;
+        gnome.gcr-ssh-agent.enable = true; # programs.ssh.startAgent conflicts
+        tlp.enable = lib.mkForce false; # ditto as ssh
+        power-profiles-daemon.enable = true;
+      };
+
+      environment.gnome.excludePackages = builtins.attrValues {
+        inherit
+          (pkgs)
+          gnome-shell-extensions
+          gnome-initial-setup
+          gnome-text-editor
+          gnome-calendar
+          gnome-contacts
+          gnome-console
+          gnome-weather
+          gnome-photos
+          gnome-music
+          gnome-maps
+          gnome-tour
+          simple-scan
+          epiphany
+          snapshot
+          evince
+          atomix
+          cheese
+          hitori
+          gedit
+          geary
+          iagno
+          totem
+          tali
+          yelp
+          ;
+      };
+
       hm = {
         home.packages = gnomeExtensions;
 

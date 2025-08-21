@@ -55,55 +55,53 @@
 
     forAllSystems = lib.genAttrs systems;
 
-    mkHost = let
-      state = "25.11";
-    in
-      {
-        opts ? {},
-        extraModules ? [],
-      }:
-        lib.nixosSystem {
-          system = opts.architecture;
-          specialArgs = {inherit inputs opts;};
+    mkHost = {
+      extraOpts ? {},
+      extraModules ? [],
+      ...
+    }:
+      lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs;};
 
-          modules =
-            [
-              ./modules/config.nix
+        modules =
+          [
+            ./modules/config.nix
 
-              ./systems/${opts.host}/host.nix
-              ./systems/${opts.host}/part.nix
+            ./systems/${extraOpts.host}/host.nix
+            ./systems/${extraOpts.host}/part.nix
 
-              {
-                nixpkgs.overlays = [
-                  (self: super: {
-                    faye = faye.packages.${super.system};
-                  })
-                ];
+            {
+              my = extraOpts;
 
-                system.stateVersion = state;
-              }
+              nixpkgs.overlays = [
+                (self: super: {
+                  faye = faye.packages.${super.system};
+                })
+              ];
 
-              home.nixosModules.home-manager
-              {
-                home-manager = {
-                  extraSpecialArgs = {inherit opts;};
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  users.${opts.user} = {
-                    home.stateVersion = state;
+              system.stateVersion = "25.11";
+            }
 
-                    imports = [
-                      ./systems/${opts.host}/home.nix
-                      vim.homeModules.nixvim
-                    ];
-                  };
+            home.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.akemi = {
+                  home.stateVersion = "25.11";
+                  imports = [
+                    ./systems/timeline/home.nix
+                    vim.homeModules.nixvim
+                  ];
                 };
-              }
+              };
+            }
 
-              (lib.mkAliasOptionModule ["hm"] ["home-manager" "users" opts.user])
-            ]
-            ++ extraModules;
-        };
+            (lib.mkAliasOptionModule ["hm"] ["home-manager" "users" "akemi"])
+          ]
+          ++ extraModules;
+      };
   in {
     # `sudo nixos-rebuild switch --flake .#hostname`
 
@@ -113,11 +111,14 @@
         disko.nixosModules.disko
       ];
 
-      opts = {
-        host = "timeline";
-        user = "drainpixie";
-        email = "121581793+drainpixie@users.noreply.github.com";
+      extraOpts = {
         architecture = "x86_64-linux";
+
+        host = "timeline";
+        user = "akemi";
+
+        git.user = "drainpixie";
+        git.email = "121581793+drainpixie@users.noreply.github.com";
       };
     };
 

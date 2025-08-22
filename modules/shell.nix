@@ -55,6 +55,35 @@
           };
         };
 
+        starship = {
+          enable = true;
+          enableZshIntegration = true;
+          settings =
+            {
+              format = "$username$directory$git_branch$character";
+              add_newline = false;
+
+              directory = {
+                format = "[$path]($style) ";
+                style = "blue";
+                fish_style_pwd_dir_length = 1;
+                truncation_length = 1;
+                truncate_to_repo = true;
+              };
+
+              git_branch = {
+                format = "[$branch]($style) ";
+                style = "purple";
+              };
+
+              character = {
+                success_symbol = "[\\$](green)";
+                error_symbol = "[\\$](red)";
+              };
+            }
+            // lib.genAttrs ["username" "aws" "gcloud" "nodejs" "python" "rust" "golang" "php" "java" "docker_context" "package" "cmake" "conda" "dart" "deno" "dotnet" "elixir" "elm" "erlang" "helm" "julia" "kotlin" "kubernetes" "lua" "nim" "nix_shell" "ocaml" "perl" "purescript" "red" "ruby" "scala" "swift" "terraform" "vlang" "zig" "cmd_duration" "line_break" "jobs" "battery" "time" "status" "memory_usage" "env_var" "custom" "sudo" "localip"] (_: {disabled = true;});
+        };
+
         zsh = {
           enable = true;
           enableCompletion = true;
@@ -89,6 +118,16 @@
             "COMPLETE_IN_WORD"
             "ALWAYS_TO_END"
           ];
+
+          initContent = ''
+            bindkey "^[[1;5C" forward-word    # Ctrl+Right
+            bindkey "^[[1;5D" backward-word   # Ctrl+Left
+
+            bindkey "^[OC" forward-word       # Alt+Right (fallback)
+            bindkey "^[OD" backward-word      # Alt+Left (fallback)
+            bindkey "^[[5C" forward-word      # Ctrl+Right (alternative)
+            bindkey "^[[5D" backward-word     # Ctrl+Left (alternative)
+          '';
 
           shellAliases = {
             c = "clear";

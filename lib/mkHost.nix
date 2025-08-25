@@ -44,7 +44,7 @@ nixpkgs.lib.nixosSystem {
         };
       }
 
-      (nixpkgs.lib.mkAliasOptionModule ["hm"] ["home-manager" "users" "akemi"])
+      (nixpkgs.lib.mkAliasOptionModule ["hm"] ["home-manager" "users" extraOpts.user])
     ]
     ++ extraModules;
 }

@@ -42,10 +42,9 @@
     faye,
     vim,
     ...
-  } @ inputs: let
-    lib = nixpkgs.lib // home.lib // (import ./lib {inherit nixpkgs inputs;});
-  in {
+  } @ inputs: rec {
     # `sudo nixos-rebuild switch --flake .#hostname`
+    lib = nixpkgs.lib // home.lib // (import ./lib {inherit nixpkgs inputs;});
 
     nixosConfigurations.timeline = lib.mkHost {
       extraModules = [

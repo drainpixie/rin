@@ -4,6 +4,8 @@
   ...
 }: {
   imports = [
+    ../../modules/neovim
+
     ../../modules/discord.nix
     ../../modules/shell.nix
     ../../modules/de.nix
@@ -15,6 +17,9 @@
 
     shell.minimal = false;
     shell.enable = true;
+
+    neovim.minimal = false;
+    neovim.enable = true;
 
     vm = true;
     docker = true;

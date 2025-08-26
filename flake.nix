@@ -24,12 +24,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    faye = {
-      url = "sourcehut:~pixie/hyo";
-      inputs.hooks.follows = "hooks";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -39,7 +33,6 @@
     hooks,
     home,
     self,
-    faye,
     vim,
     ...
   } @ inputs: rec {

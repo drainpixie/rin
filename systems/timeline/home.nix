@@ -1,67 +1,66 @@
-{pkgs, ...}: {
-  systemd.user.startServices = "sd-switch";
+{pkgs, ...}: let
+  cli = builtins.attrValues {
+    inherit
+      (pkgs)
+      man-pages
+      man-pages-posix
+      wl-clipboard
+      xclip
+      xsel
+      du-dust
+      strace
+      tokei
+      wget
+      curl
+      fd
+      jq
+      ;
 
-  home = {
-    packages = let
-      minecraft = pkgs.prismlauncher.override {
-        jdks = builtins.attrValues {
-          inherit (pkgs) temurin-bin-21 temurin-bin-17 temurin-bin-8;
-        };
-      };
-
-      # todo: declarative, we use settingssync right now
-      insiders = (pkgs.vscode.override {isInsiders = true;}).overrideAttrs (oldAttrs: {
-        src = fetchTarball {
-          url = "https://code.visualstudio.com/sha/download?build=insider&os=linux-x64";
-          sha256 = "06lvxcd01idv6y6305qwq0n6vn942z9lfs526nd83vp35jasayv4";
-        };
-
-        version = "latest";
-        buildInputs = oldAttrs.buildInputs ++ [pkgs.krb5];
-      });
-    in
-      builtins.attrValues {
-        # cli
-        inherit
-          (pkgs)
-          man-pages
-          man-pages-posix
-          wl-clipboard
-          xclip
-          xsel
-          du-dust
-          strace
-          tokei
-          wget
-          curl
-          fd
-          jq
-          ;
-
-        # apps
-        inherit
-          (pkgs)
-          telegram-desktop
-          signal-desktop
-          google-chrome
-          pavucontrol
-          zathura
-          vesktop
-          gparted
-          bruno
-          nsxiv
-          mpv
-          ;
-
-        # fonts
-        inherit (pkgs) meslo-lgs-nf;
-        inherit (pkgs.faye) drafting-mono beedii azuki;
-      }
-      ++ [
-        minecraft
-        insiders.fhs
-      ];
+    inherit
+      (pkgs.my)
+      kc
+      gign
+      ;
   };
+
+  apps = builtins.attrValues {
+    inherit
+      (pkgs)
+      signal-desktop
+      google-chrome
+      pavucontrol
+      zathura
+      vesktop
+      gparted
+      nsxiv
+      mpv
+      ;
+  };
+
+  fonts = builtins.attrValues {
+    inherit (pkgs) meslo-lgs-nf;
+    inherit (pkgs.my) drafting-mono beedii azuki;
+  };
+
+  minecraft = pkgs.prismlauncher.override {
+    jdks = builtins.attrValues {
+      inherit (pkgs) temurin-bin-21 temurin-bin-17 temurin-bin-8;
+    };
+  };
+
+  # todo: declarative, we use settingssync right now
+  insiders = (pkgs.vscode.override {isInsiders = true;}).overrideAttrs (oldAttrs: {
+    src = fetchTarball {
+      url = "https://code.visualstudio.com/sha/download?build=insider&os=linux-x64";
+      sha256 = "06lvxcd01idv6y6305qwq0n6vn942z9lfs526nd83vp35jasayv4";
+    };
+
+    version = "latest";
+    buildInputs = oldAttrs.buildInputs ++ [pkgs.krb5];
+  });
+in {
+  systemd.user.startServices = "sd-switch";
+  home.packages = {inherit cli fonts minecraft insiders;};
 
   xdg = {
     userDirs = {

@@ -20,29 +20,6 @@
         "type": "github"
       }
     },
-    "faye": {
-      "inputs": {
-        "hooks": [
-          "hooks"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1748275860,
-        "narHash": "sha256-kfeq2vU0NKl9cOn+Wuu2Lg9L3UHGT5/mvfG3X1JrpLI=",
-        "owner": "~pixie",
-        "repo": "hyo",
-        "rev": "c41410a7a08562aa6be671f185d84dfeac48bea5",
-        "type": "sourcehut"
-      },
-      "original": {
-        "owner": "~pixie",
-        "repo": "hyo",
-        "type": "sourcehut"
-      }
-    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -246,7 +223,6 @@
     "root": {
       "inputs": {
         "disko": "disko",
-        "faye": "faye",
         "hardware": "hardware",
         "home": "home",
         "hooks": "hooks",

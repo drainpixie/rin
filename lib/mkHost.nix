@@ -5,50 +5,41 @@
   extraOpts ? {},
   extraModules ? [],
   ...
-}: let
-  overlays = import ../overlays;
-in
-  nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    specialArgs = {inherit inputs;};
+}:
+nixpkgs.lib.nixosSystem {
+  system = "x86_64-linux";
+  specialArgs = {inherit inputs;};
 
-    modules =
-      [
-        ../modules/config.nix
+  modules =
+    [
+      ../modules/config.nix
 
-        ../systems/${extraOpts.host}/host.nix
-        ../systems/${extraOpts.host}/part.nix
+      ../systems/${extraOpts.host}/host.nix
+      ../systems/${extraOpts.host}/part.nix
 
-        {
-          my = extraOpts;
+      {
+        my = extraOpts;
 
-          nixpkgs.overlays =
-            [
-              (self: super: {
-                faye = inputs.faye.packages.${super.system};
-              })
-            ]
-            ++ overlays;
+        nixpkgs.overlays = import ../overlays;
+        system.stateVersion = "25.11";
+      }
 
-          system.stateVersion = "25.11";
-        }
-
-        inputs.home.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.akemi = {
-              home.stateVersion = "25.11";
-              imports = [
-                ../systems/timeline/home.nix
-                inputs.vim.homeModules.nixvim
-              ];
-            };
+      inputs.home.nixosModules.home-manager
+      {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          users.akemi = {
+            home.stateVersion = "25.11";
+            imports = [
+              ../systems/timeline/home.nix
+              inputs.vim.homeModules.nixvim
+            ];
           };
-        }
+        };
+      }
 
-        (nixpkgs.lib.mkAliasOptionModule ["hm"] ["home-manager" "users" extraOpts.user])
-      ]
-      ++ extraModules;
-  }
+      (nixpkgs.lib.mkAliasOptionModule ["hm"] ["home-manager" "users" extraOpts.user])
+    ]
+    ++ extraModules;
+}

@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    # ../../modules/neovim
+    ../../modules/neovim
 
     ../../modules/discord.nix
     ../../modules/shell.nix

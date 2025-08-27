@@ -4,9 +4,9 @@
   pkgs,
   ...
 }: {
-  options.my.neovim = lib.mkEnableOption "Faye’s neovim configuration";
+  options.my.neovim = lib.mkEnableOption "faye's neovim configuration";
 
   config = lib.mkIf config.my.neovim {
-    hm.home.packages = [(callPackage ./neovim.nix {inherit pkgs;})];
+    hm.home.packages = [(pkgs.callPackage ./neovim.nix {})];
   };
 }

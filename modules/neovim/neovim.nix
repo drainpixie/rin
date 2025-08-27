@@ -1,37 +1,51 @@
 {
   wrapNeovimUnstable,
   neovim-unwrapped,
+  neovimUtils,
+  vimPlugins,
   fennel,
+  stdenv,
+  ...
 }: let
-  config = pkgs.stdenv.mkDerivation {
-    name = "nvim-config";
-    phases = ["installPhase"];
+  compiled = stdenv.mkDerivation {
+    name = "fennel-compiled";
+
+    unpackPhase = "false";
+    phases = ["buildPhase" "installPhase"];
+
     nativeBuildInputs = [fennel];
+
+    src = ./config;
 
     installPhase = ''
       runHook preInstall
 
-      mkdir -p $out/share/nvim
-      fennel --compile $src/init.fnl > $out/share/nvim/init.lua
+      mkdir -p $out/lua
+      fennel --compile $src/init.fnl > $out/init.lua
 
       if [ -d $src/fnl ]; then
-        mkdir -p $out/share/nvim/lua
-        for f in $src/fnl/*.fnl; do
-          base="$(basename "$f" .fnl)"
-          fennel --compile "$f" > "$out/share/nvim/lua/$base.lua"
+        find $src/fnl -name '*.fnl' | while read -r f; do
+          rel="''${f#$src/fnl/}"
+          outpath="$out/lua/''${rel%.fnl}.lua"
+          mkdir -p "$(dirname "$outpath")"
+          fennel --compile "$f" > "$outpath"
         done
       fi
 
       runHook postInstall
     '';
   };
-in
-  wrapNeovimUnstable {
+
+  config = neovimUtils.makeNeovimConfig {
     viAlias = true;
     vimAlias = true;
 
-    plugins = with pkgs.vimPlugins; [lazy-nvim];
+    plugins = with vimPlugins; [lazy-nvim];
 
-    wrapRc = "${fennelConfig}/share/nvim/init.lua";
-    wrapperArgs = with lib; ''--prefix PATH : "${makeBinPath (lists.unique (lists.flatten binaries))}"'';
-  }
+    customLuaRC = ''
+      vim.opt.runtimepath:append(vim.fn.expand("${compiled}"))
+      dofile(vim.fn.expand('${compiled}/init.lua'))
+    '';
+  };
+in
+  wrapNeovimUnstable neovim-unwrapped config

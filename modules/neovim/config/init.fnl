@@ -1,5 +1,5 @@
 (local lazy (require :lazy))
 
-(lazy.setup [:udayvir-singh/hibiscus.nvim])
+(lazy.setup [:nvim-telescope/telescope.nvim])
 
-(print "Hello, World!")
+(require :opts)

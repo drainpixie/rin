@@ -19,7 +19,7 @@
     shell.enable = true;
 
     # neovim.minimal = false;
-    # neovim.enable = true;
+    neovim = true;
 
     vm = true;
     docker = true;

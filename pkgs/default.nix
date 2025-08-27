@@ -4,5 +4,5 @@ with pkgs; {
   azuki = callPackage ./azuki.nix {};
 
   kc = callPackage ./kc.nix {};
-  gign = callPackage ./gign.nix {};
+  gign = callPackage ./gign {};
 }

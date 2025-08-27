@@ -20,6 +20,6 @@ rustPlatform.buildRustPackage rec {
     license = lib.licenses.mit;
   };
 
-  cargoPatches = [./gign.patch]; # note: not in og repo
+  cargoPatches = [./lockfile.patch]; # note: not in og repo
   cargoHash = "sha256-E2h6dGOexntFWuLo8xWkj9Y3lXdIEUOa7K3sAw5q/Wg=";
 }

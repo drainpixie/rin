@@ -9,7 +9,7 @@
 
   config = lib.mkIf config.my.shell.enable {
     programs.zsh.enable = true;
-    users.users."${config.my.user}".shell = pkgs.zsh;
+    users.users.${config.my.user}.shell = pkgs.zsh;
 
     hm = {
       programs = {

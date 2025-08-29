@@ -33,7 +33,7 @@ nixpkgs.lib.nixosSystem {
           users.akemi = {
             home.stateVersion = "25.11";
             imports = [
-              ../systems/timeline/home.nix
+              ../systems/${extraOpts.host}/home.nix
               inputs.vim.homeModules.nixvim
             ];
           };

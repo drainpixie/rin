@@ -1,3 +1,21 @@
+local ok, navic = pcall(require, "nvim-navic")
+
+local tabline_section = nil
+if ok then
+	tabline_section = {
+		lualine_a = {
+			{
+				function()
+					return navic.get_location()
+				end,
+				cond = function()
+					return navic.is_available()
+				end,
+			},
+		},
+	}
+end
+
 require("lualine").setup({
 	options = {
 		theme = {
@@ -5,34 +23,34 @@ require("lualine").setup({
 				a = { bg = "#FFFFFF" },
 				b = { bg = "#FFFFFF" },
 				c = { bg = "#FFFFFF" },
-				x = { bg = "#424242", fg = "#FFFFFF", gui = "bold" },
-				y = { bg = "#2e2e2e", fg = "#FFFFFF" },
-				z = { bg = "#050505", fg = "#FFFFFF" },
+				x = { bg = "#FFFFFF", fg = "#424242", gui = "bold" },
+				y = { bg = "#FFFFFF" },
+				z = { bg = "#FFFFFF" },
 			},
 			insert = {
-				x = { bg = "#345C7D", fg = "#FFFFFF", gui = "bold" },
-				y = { bg = "#2e2e2e", fg = "#FFFFFF" },
-				z = { bg = "#050505", fg = "#FFFFFF" },
+				x = { bg = "#FFFFFF", fg = "#345C7D", gui = "bold" },
+				y = { bg = "#FFFFFF" },
+				z = { bg = "#FFFFFF" },
 			},
 			visual = {
-				x = { bg = "#9E7B1C", fg = "#FFFFFF", gui = "bold" },
-				y = { bg = "#2e2e2e", fg = "#FFFFFF" },
-				z = { bg = "#050505", fg = "#FFFFFF" },
+				x = { bg = "#FFFFFF", fg = "#9E7B1C", gui = "bold" },
+				y = { bg = "#FFFFFF" },
+				z = { bg = "#FFFFFF" },
 			},
 			replace = {
-				x = { bg = "#6A4C7C", fg = "#FFFFFF", gui = "bold" },
-				y = { bg = "#2e2e2e", fg = "#FFFFFF" },
-				z = { bg = "#050505", fg = "#FFFFFF" },
+				x = { bg = "#FFFFFF", fg = "#6A4C7C", gui = "bold" },
+				y = { bg = "#FFFFFF" },
+				z = { bg = "#FFFFFF" },
 			},
 			command = {
-				x = { bg = "#993333", fg = "#FFFFFF", gui = "bold" },
-				y = { bg = "#2e2e2e", fg = "#FFFFFF" },
-				z = { bg = "#050505", fg = "#FFFFFF" },
+				x = { bg = "#FFFFFF", fg = "#993333", gui = "bold" },
+				y = { bg = "#FFFFFF" },
+				z = { bg = "#FFFFFF" },
 			},
 			inactive = {
-				x = { bg = "#555555", fg = "#FFFFFF", gui = "bold" },
-				y = { bg = "#2e2e2e", fg = "#FFFFFF" },
-				z = { bg = "#050505", fg = "#FFFFFF" },
+				x = { bg = "#FFFFFF", fg = "#555555", gui = "bold" },
+				y = { bg = "#FFFFFF" },
+				z = { bg = "#FFFFFF" },
 			},
 		},
 		component_separators = { left = "", right = "" },
@@ -44,12 +62,14 @@ require("lualine").setup({
 		lualine_a = {},
 		lualine_b = {},
 		lualine_c = {},
-		lualine_x = { {
-			"mode",
-			fmt = function(x)
-				return x:sub(1, 1):lower()
-			end,
-		} },
+		lualine_x = {
+			{
+				"mode",
+				fmt = function(x)
+					return x:sub(1, 1):lower()
+				end,
+			},
+		},
 		lualine_y = {
 			{
 				"filetype",
@@ -69,7 +89,7 @@ require("lualine").setup({
 					end
 					return "  off"
 				end,
-				color = { bg = "#1a1a1a", fg = "#FFFFFF" },
+				color = { bg = "#FFFFFF" },
 			},
 		},
 		lualine_z = { { "branch", icon = "" } },
@@ -82,6 +102,6 @@ require("lualine").setup({
 		lualine_y = {},
 		lualine_z = {},
 	},
-	tabline = {},
+	tabline = tabline_section,
 	extensions = { "oil" },
 })

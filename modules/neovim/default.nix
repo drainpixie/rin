@@ -91,6 +91,11 @@
         treesitter.enable = true;
         nvim-autopairs.enable = true;
 
+        navic = {
+          enable = lib.mkIf (!config.my.neovim.minimal) true;
+          settings.lsp.auto_attach = true;
+        };
+
         colorizer = {
           enable = lib.mkIf (!config.my.neovim.minimal) true;
           settings = {

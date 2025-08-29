@@ -40,6 +40,18 @@
               experimental.ghost_text = true;
               formatting.fields = ["kind" "abbr" "menu"];
 
+              window = {
+                completion = {
+                  border = "rounded";
+                  winhighlight = "Normal:Normal,FloatBorder:Normal";
+                };
+
+                documentation = {
+                  border = "rounded";
+                  winhighlight = "Normal:Normal,FloatBorder:Normal";
+                };
+              };
+
               sources = [
                 {name = "nvim_lsp";}
                 {name = "emoji";}
@@ -58,11 +70,6 @@
                   keywordLength = 3;
                 }
               ];
-
-              window = {
-                completion.border = "solid";
-                documentation.border = "solid";
-              };
 
               mapping = {
                 "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";

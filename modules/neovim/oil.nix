@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }: {
@@ -10,10 +9,21 @@
         enable = true;
         settings = {
           columns = [
-            "permissions"
-            "size"
-            "mtime"
+            "icon"
           ];
+
+          preview = {
+            border = "rounded";
+
+            size = {
+              width = 0.5;
+              height = 0.5;
+            };
+
+            win_options = {
+              winhighlight = "Normal:Normal,FloatBorder:Normal";
+            };
+          };
 
           view_options.show_hidden = true;
         };

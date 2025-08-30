@@ -43,7 +43,7 @@
               window = {
                 completion = {
                   border = "rounded";
-                  winhighlight = "Normal:Normal,FloatBorder:Normal";
+                  winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:Visual";
                 };
 
                 documentation = {

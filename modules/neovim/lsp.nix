@@ -6,6 +6,7 @@
 }: {
   config = lib.mkIf config.my.neovim.enable {
     programs.nixvim = {
+      lsp.inlayHints.enable = true;
       diagnostic.settings = {
         virtual_text = false;
         virtual_lines.current_line = true;
@@ -14,7 +15,6 @@
       plugins = {
         lsp = {
           enable = lib.mkIf (!config.my.neovim.minimal) true;
-          inlayHints.enable = true;
 
           servers =
             tools.enableMany [

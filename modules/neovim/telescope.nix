@@ -18,6 +18,12 @@
           options.desc = "Find file in project.";
         }
         {
+          action = ":Telescope live_grep<CR>";
+          key = "<leader>fs";
+          mode = "n";
+          options.desc = "Find text in project.";
+        }
+        {
           action = ":Telescope git_files<CR>";
           key = "<leader>fg";
           mode = "n";

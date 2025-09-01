@@ -15,14 +15,12 @@
       ;
   };
 in {
-  programs.ssh.startAgent = lib.mkForce false;
-
   services = {
     desktopManager.gnome.enable = true;
     gnome.gnome-keyring.enable = true;
-    gnome.gcr-ssh-agent.enable = true; # programs.ssh.startAgent conflicts
-    tlp.enable = lib.mkForce false; # ditto as ssh
     power-profiles-daemon.enable = true;
+    tlp.enable = lib.mkForce false;
+    gnome.gcr-ssh-agent.enable = lib.mkForce false;
   };
 
   environment.gnome.excludePackages = builtins.attrValues {

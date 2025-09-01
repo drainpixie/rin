@@ -131,7 +131,16 @@
         home-manager.enable = true;
         git = {
           enable = true;
-          delta.enable = true;
+
+          extraConfig = {
+            color.ui = "auto";
+            pull.rebase = true;
+            delta.enable = true;
+            init.defaultBranch = "main";
+
+            core.editor = config.my.editor;
+          };
+
           userName = config.my.git.user;
           userEmail = config.my.git.email;
         };

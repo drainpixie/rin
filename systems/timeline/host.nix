@@ -31,6 +31,7 @@
   };
 
   age.identityPaths = ["${config.hm.home.homeDirectory}/.ssh/drainpixie"];
+  programs.ssh.startAgent = true;
 
   time.hardwareClockInLocalTime = true;
   documentation.nixos.enable = false;
@@ -59,26 +60,6 @@
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
-    };
-  };
-
-  programs = {
-    ssh = {
-      startAgent = true;
-      extraConfig = ''
-        AddKeysToAgent yes
-      '';
-    };
-
-    git = {
-      enable = true;
-
-      config = {
-        color.ui = "auto";
-        pull.rebase = true;
-        init.defaultBranch = "main";
-        core.editor = config.my.editor;
-      };
     };
   };
 

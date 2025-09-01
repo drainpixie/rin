@@ -61,11 +61,47 @@
   });
 in {
   systemd.user.startServices = "sd-switch";
-  home.packages =
-    cli
-    ++ apps
-    ++ fonts
-    ++ [minecraft insiders.fhs];
+  systemd.user.sessionVariables.SSH_AUTH_SOCK = "/run/user/1000/keyring/ssh";
+
+  programs = {
+    gpg.enable = true;
+
+    ssh = {
+      enable = true;
+
+      matchBlocks = {
+        "*" = {
+          addKeysToAgent = "yes";
+        };
+      };
+    };
+
+    git = {
+      delta.enable = true;
+
+      extraConfig = {
+        commit.gpgSign = true;
+        tag.gpgSign = true;
+        gpg.format = "ssh";
+        gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
+      };
+
+      signing = {
+        format = "ssh";
+        signByDefault = true;
+
+        key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGjrd3Drz463j6IpRJzPIm+KczyhYE7upw7rjlGTlMnJ";
+      };
+    };
+  };
+
+  home = {
+    packages =
+      cli
+      ++ apps
+      ++ fonts
+      ++ [minecraft insiders.fhs];
+  };
 
   xdg = {
     userDirs = {

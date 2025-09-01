@@ -7,10 +7,21 @@
 }: {
   config = lib.mkIf (config.my.neovim.enable && !config.my.neovim.minimal) {
     programs.nixvim.plugins.wakatime.enable = true;
-    age.secrets.waka-salt = {
-      file = ../../secrets/wakapi-salt;
-      owner = "wakapi";
-      group = "wakapi";
+
+    age.secrets = {
+      waka-salt = {
+        file = ../../secrets/wakapi-salt;
+        owner = "wakapi";
+        group = "wakapi";
+      };
+
+      waka-conf = {
+        path = "${config.hm.home.homeDirectory}/.wakatime.cfg";
+        file = ../../secrets/wakapi-conf;
+        owner = config.my.user;
+        group = "users";
+        mode = "777"; # todo: review perms
+      };
     };
 
     services.wakapi = {

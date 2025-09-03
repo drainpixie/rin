@@ -54,7 +54,10 @@
         wrap = false;
         linebreak = true;
 
+        modelines = 4;
+        modeline = true;
         showmode = false;
+        modelineexpr = true;
         background = "light";
       };
 
@@ -173,8 +176,12 @@
       ];
 
       extraPlugins = builtins.attrValues {
-        inherit (pkgs.my) alabaster;
+        inherit (pkgs.my) alabaster ori;
       };
+
+      extraConfigLua = ''
+        require('ori').setup()
+      '';
     };
   };
 }

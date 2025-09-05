@@ -30,12 +30,9 @@ nixpkgs.lib.nixosSystem {
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
-          users.akemi = {
+          users.${extraOpts.user} = {
             home.stateVersion = "25.11";
-            imports = [
-              ../systems/${extraOpts.host}/home.nix
-              inputs.vim.homeModules.nixvim
-            ];
+            imports = [../systems/${extraOpts.host}/home.nix];
           };
         };
       }

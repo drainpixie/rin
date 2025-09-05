@@ -95,8 +95,8 @@
       (lib.mkIf config.my.vm {
         vmVariant.virtualisation = {
           graphics = true;
+          cores = 4;
           memorySize = 4 * 1024;
-          cpuCount = 4;
         };
       })
 

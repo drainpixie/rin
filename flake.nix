@@ -45,25 +45,50 @@
     # `sudo nixos-rebuild switch --flake .#hostname`
     lib = nixpkgs.lib // home.lib // (import ./lib {inherit nixpkgs inputs;});
 
-    nixosConfigurations.timeline = lib.mkHost {
-      extraModules = [
-        vim.nixosModules.nixvim
-        age.nixosModules.default
-        disko.nixosModules.disko
-        hardware.nixosModules.dell-latitude-5520
-      ];
-
-      # different name to avoid conflicts
-      extraSpecialArgs.tools = lib;
-
-      extraOpts = {
+    nixosConfigurations = let
+      base = {
         architecture = "x86_64-linux";
+        git = {
+          user = "drainpixie";
+          email = "121581793+drainpixie@users.noreply.github.com";
+        };
+      };
+    in {
+      timeline = lib.mkHost {
+        extraModules = [
+          vim.nixosModules.nixvim
+          age.nixosModules.default
+          disko.nixosModules.disko
+          hardware.nixosModules.dell-latitude-5520
+        ];
 
-        host = "timeline";
-        user = "akemi";
+        extraOpts =
+          base
+          // {
+            host = "timeline";
+            user = "akemi";
+          };
 
-        git.user = "drainpixie";
-        git.email = "121581793+drainpixie@users.noreply.github.com";
+        # different name to avoid conflicts
+        extraSpecialArgs.tools = lib;
+      };
+
+      incubator = lib.mkHost {
+        extraModules = [
+          vim.nixosModules.nixvim
+          age.nixosModules.default
+          hardware.nixosModules.common-pc
+          hardware.nixosModules.common-pc-ssd
+        ];
+
+        extraOpts =
+          base
+          // {
+            host = "incubator";
+            user = "kyubey";
+          };
+
+        extraSpecialArgs.tools = lib;
       };
     };
 

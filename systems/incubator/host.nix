@@ -41,7 +41,6 @@
   };
 
   security.sudo.enable = true;
-  boot.loader.grub.device = "/dev/vda";
 
   networking = {
     firewall = {

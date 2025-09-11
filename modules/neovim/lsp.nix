@@ -22,7 +22,7 @@
               "ts_ls"
               "svelte"
               "nil_ls"
-              "nimls"
+              "gopls"
               "lua_ls"
               "clangd"
               "pyright"
@@ -59,7 +59,7 @@
                 c = ["clang-format"];
                 cpp = ["clang-format"];
                 nix = ["alejandra"];
-                nim = ["nph"];
+                go = ["gofmt"];
               }
               // builtins.listToAttrs (
                 map

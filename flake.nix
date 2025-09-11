@@ -77,6 +77,7 @@
         extraModules = [
           vim.nixosModules.nixvim
           age.nixosModules.default
+          disko.nixosModules.disko
           hardware.nixosModules.common-pc
           hardware.nixosModules.common-pc-ssd
         ];

@@ -31,7 +31,7 @@
     enable = true;
     settings = {
       PermitRootLogin = "no";
-      PasswordAuthentication = true; # momentarily
+      PasswordAuthentication = false;
     };
   };
 
@@ -41,6 +41,10 @@
   };
 
   security.sudo.enable = true;
+  security.pam = {
+    sshAgentAuth.enable = true;
+    services.sudo.sshAgentAuth = true;
+  };
 
   networking = {
     firewall = {

@@ -122,7 +122,7 @@
       in {
         default = nixpkgs.legacyPackages.${system}.mkShell {
           inherit (check) shellHook;
-          buildInputs = check.enabledPackages ++ [nixpkgs.legacyPackages.${system}.fnlfmt];
+          buildInputs = check.enabledPackages;
         };
       }
     );

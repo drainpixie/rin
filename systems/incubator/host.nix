@@ -2,6 +2,7 @@
   imports = [
     ../../modules/neovim
     ../../modules/shell.nix
+    ../../modules/services/drainpixie.nix
 
     ./nginx.nix
     ./wakapi.nix
@@ -30,6 +31,8 @@
   documentation.nixos.enable = false;
 
   services = {
+    drainpixie.enable = true;
+
     chrony.enable = true;
 
     journald.extraConfig = ''

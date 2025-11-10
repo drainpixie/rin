@@ -8,11 +8,8 @@ _: {
     defaults.email = "faye.keller06+web@gmail.com";
   };
 
-  systemd.services.nginx.serviceConfig.ProtectHome = false;
-
   services.nginx = {
     enable = true;
-
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
     recommendedProxySettings = true;
@@ -24,20 +21,33 @@ _: {
       add_header X-XSS-Protection "1; mode=block";
     '';
 
-    virtualHosts."drainpixie.duckdns.org" = {
-      enableACME = true;
-      forceSSL = true;
+    virtualHosts = {
+      "drainpixie.xyz" = {
+        enableACME = true;
+        forceSSL = true;
 
-      root = "/etc/nginx/html";
+        locations = {
+          "/" = {
+            proxyPass = "http://127.0.0.1:3001/";
+            proxyWebsockets = true;
+          };
+        };
+      };
 
-      locations = {
-        "/".index = "index.html";
+      "waka.drainpixie.xyz" = {
+        enableACME = true;
+        forceSSL = true;
 
-        "/wakapi/" = {
-          proxyPass = "http://0.0.0.0:8080/";
-          proxyWebsockets = true;
+        locations = {
+          "/" = {
+            proxyPass = "http://127.0.0.1:8080/";
+            proxyWebsockets = true;
+          };
         };
       };
     };
   };
+
+  systemd.services.nginx.serviceConfig.ProtectHome = false;
+  networking.firewall.allowedTCPPorts = [80 443];
 }

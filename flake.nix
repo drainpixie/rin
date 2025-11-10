@@ -29,11 +29,18 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    website = {
+      url = "github:drainpixie/www";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.hooks.follows = "hooks";
+    };
   };
 
   outputs = {
     hardware,
     nixpkgs,
+    website,
     disko,
     hooks,
     home,

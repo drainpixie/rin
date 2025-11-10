@@ -49,19 +49,24 @@
     age,
     ...
   } @ inputs: rec {
-    # `sudo nixos-rebuild switch --flake .#hostname`
     lib = nixpkgs.lib // home.lib // (import ./lib {inherit nixpkgs inputs;});
 
+    # nixos-rebuild switch --flake ".?submodules=1#timeline"
     nixosConfigurations = let
-      base = {
-        architecture = "x86_64-linux";
-        git = {
-          user = "drainpixie";
-          email = "121581793+drainpixie@users.noreply.github.com";
-        };
-      };
+      extraSpecialArgs.tools = lib;
+      mkExtraOpts = attrs:
+        {
+          architecture = "x86_64-linux";
+          git = {
+            user = "drainpixie";
+            email = "121581793+drainpixie@users.noreply.github.com";
+          };
+        }
+        // attrs;
     in {
       timeline = lib.mkHost {
+        inherit extraSpecialArgs;
+
         extraModules = [
           vim.nixosModules.nixvim
           age.nixosModules.default
@@ -69,18 +74,15 @@
           hardware.nixosModules.dell-latitude-5520
         ];
 
-        extraOpts =
-          base
-          // {
-            host = "timeline";
-            user = "akemi";
-          };
-
-        # different name to avoid conflicts
-        extraSpecialArgs.tools = lib;
+        extraOpts = mkExtraOpts {
+          host = "timeline";
+          user = "akemi";
+        };
       };
 
       incubator = lib.mkHost {
+        inherit extraSpecialArgs;
+
         extraModules = [
           vim.nixosModules.nixvim
           age.nixosModules.default
@@ -89,14 +91,10 @@
           hardware.nixosModules.common-pc-ssd
         ];
 
-        extraOpts =
-          base
-          // {
-            host = "incubator";
-            user = "kyubey";
-          };
-
-        extraSpecialArgs.tools = lib;
+        extraOpts = mkExtraOpts {
+          host = "incubator";
+          user = "kyubey";
+        };
       };
     };
 

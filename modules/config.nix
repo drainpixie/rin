@@ -7,7 +7,7 @@
 }: {
   options.my = {
     git = {
-      user = lib.mkOption {
+      name = lib.mkOption {
         type = lib.types.str;
         default = "User Name";
         description = "The name for the git user.";
@@ -132,17 +132,15 @@
         git = {
           enable = true;
 
-          extraConfig = {
+          settings = {
+            user = config.my.git;
+            core.editor = config.my.editor;
+
             color.ui = "auto";
             pull.rebase = true;
             delta.enable = true;
             init.defaultBranch = "main";
-
-            core.editor = config.my.editor;
           };
-
-          userName = config.my.git.user;
-          userEmail = config.my.git.email;
         };
       };
 

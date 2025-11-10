@@ -81,10 +81,13 @@ in {
       '';
     };
 
-    git = {
-      delta.enable = true;
+    delta = {
+      enable = true;
+      enableGitIntegration = true;
+    };
 
-      extraConfig = {
+    git = {
+      settings = {
         commit.gpgSign = true;
         tag.gpgSign = true;
         gpg.format = "ssh";

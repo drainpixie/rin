@@ -22,7 +22,7 @@
 
       server = {
         port = 8080;
-        base_path = "/wakapi";
+        base_path = "/";
         listen_ipv4 = "0.0.0.0";
         listen_ipv6 = "";
       };

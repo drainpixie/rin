@@ -1,8 +1,4 @@
 _: {
-  environment.etc."nginx/html/index.html".text = ''
-    <b>incubator</b>
-  '';
-
   security.acme = {
     acceptTerms = true;
     defaults.email = "faye.keller06+web@gmail.com";

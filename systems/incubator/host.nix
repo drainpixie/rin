@@ -2,10 +2,10 @@
   imports = [
     ../../modules/neovim
     ../../modules/shell.nix
-    ../../modules/services/drainpixie.nix
 
-    ./nginx.nix
-    ./wakapi.nix
+    ../../modules/services/nginx.nix
+    ../../modules/services/portfolio.nix
+    ../../modules/services/wakapi.nix
   ];
 
   my = {
@@ -23,16 +23,31 @@
     age = true;
   };
 
-  age.identityPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+  age = {
+    identityPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+    secrets.waka-salt = {
+      file = ../../secrets/wakapi-salt;
+      owner = "wakapi";
+      group = "wakapi";
+    };
+  };
 
   programs.ssh.startAgent = true;
 
   time.hardwareClockInLocalTime = true;
   documentation.nixos.enable = false;
 
-  services = {
-    drainpixie.enable = true;
+  rin.services = {
+    nginx.enable = true;
+    portfolio.enable = true;
 
+    wakapi = {
+      enable = true;
+      saltPath = config.age.secrets.waka-salt.path;
+    };
+  };
+
+  services = {
     chrony.enable = true;
 
     journald.extraConfig = ''
@@ -42,6 +57,8 @@
 
     openssh = {
       enable = true;
+      ports = [2222];
+      allowSFTP = false;
       settings = {
         Protocol = 2;
         MaxAuthTries = 3;
@@ -51,8 +68,6 @@
         ClientAliveInterval = 300;
         PasswordAuthentication = false;
       };
-      ports = [2222];
-      allowSFTP = false;
     };
 
     fail2ban = {

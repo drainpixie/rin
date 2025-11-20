@@ -297,11 +297,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1763496799,
-        "narHash": "sha256-V/pf+tOs3UmErv+xaQRSpXLDVhXe38XrNQV2ryBOn9I=",
+        "lastModified": 1763548784,
+        "narHash": "sha256-mIUVO1D5zyyhGZkQqDY1l0WuLwtw7oIV964X2CS50ic=",
         "owner": "drainpixie",
         "repo": "www",
-        "rev": "d94390059b82bb6518827b4da9db63f80ae34bee",
+        "rev": "0d03ce55921fd43987ff8fb4a78917b686f92106",
         "type": "github"
       },
       "original": {

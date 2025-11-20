@@ -65,6 +65,7 @@ in {
                 c = ["clang-format"];
                 cpp = ["clang-format"];
                 nix = ["alejandra"];
+                go = ["gofmt"];
               }
               // builtins.listToAttrs (
                 map

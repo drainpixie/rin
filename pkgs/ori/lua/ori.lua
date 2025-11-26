@@ -175,7 +175,7 @@ function M.init()
 
 	vim.api.nvim_create_autocmd("BufWritePre", {
 		group = group,
-		pattern = { "*.md", "*.markdown", "*.ori" },
+		pattern = { "*.ori" },
 		callback = function(args)
 			autosort_markdown_sections(args.buf)
 		end,
@@ -201,16 +201,16 @@ vim.api.nvim_create_user_command("OriFoldToggle", function()
 	M.config.enabled = not M.config.enabled
 	if M.config.enabled then
 		M.init()
-		print("Markdown folding enabled")
+		print("Ori folding enabled")
 	else
 		vim.opt_local.foldmethod = "manual"
-		print("Markdown folding disabled")
+		print("Ori folding disabled")
 	end
 end, {})
 
 vim.api.nvim_create_user_command("OriFoldSort", function()
 	autosort_markdown_sections(vim.api.nvim_get_current_buf())
-	print("Markdown sections sorted")
+	print("Ori sections sorted")
 end, {})
 
 vim.defer_fn(function()

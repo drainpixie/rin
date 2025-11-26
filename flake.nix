@@ -98,9 +98,14 @@
       };
     };
 
-    checks = lib.forAllSystems ({system, ...}: {
+    checks = lib.forAllSystems ({
+      system,
+      pkgs,
+      ...
+    }: {
       pre-commit-check = hooks.lib.${system}.run {
         src = ./.;
+        package = pkgs.prek;
         hooks =
           {
             statix = {

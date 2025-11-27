@@ -1,7 +1,7 @@
 local M = {}
 
 M.config = {
-	filetypes = { "markdown", "ori" },
+	filetypes = { "ori" },
 	auto_sort = true,
 	sort_by_length = true,
 	chevron = "› ",

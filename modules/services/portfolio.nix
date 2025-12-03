@@ -8,7 +8,7 @@
 }: let
   cfg = config.rin.services.portfolio;
   portfolio = inputs.portfolio.lib.${pkgs.stdenv.hostPlatform.system};
-  inherit (lib) mkIf concatStringsSep;
+  inherit (lib) mkIf;
 in {
   options.rin.services.portfolio = tools.mkServiceOption "portfolio" {
     port = 3000;

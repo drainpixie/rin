@@ -3,6 +3,7 @@
     ../../modules/neovim
     ../../modules/shell.nix
 
+    ../../modules/services/umami.nix
     ../../modules/services/nginx.nix
     ../../modules/services/wakapi.nix
     ../../modules/services/uptime.nix
@@ -26,10 +27,18 @@
 
   age = {
     identityPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-    secrets.waka-salt = {
-      file = ../../secrets/wakapi-salt;
-      owner = "wakapi";
-      group = "wakapi";
+    secrets = {
+      waka-salt = {
+        file = ../../secrets/wakapi-salt;
+        owner = "wakapi";
+        group = "wakapi";
+      };
+
+      umami-secret = {
+        file = ../../secrets/umami-secret;
+        owner = "umami";
+        group = "umami";
+      };
     };
   };
 
@@ -46,6 +55,11 @@
     wakapi = {
       enable = true;
       saltPath = config.age.secrets.waka-salt.path;
+    };
+
+    umami = {
+      enable = true;
+      secretFile = config.age.secrets.umami-secret.path;
     };
   };
 
